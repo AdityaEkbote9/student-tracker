@@ -13,7 +13,7 @@ async function startServer() {
     try {
       const { syllabus, examDate, availableHours, subjectDifficulty } = req.body;
       
-      const apiKey = process.env.GEMINI_API_KEY || "AIzaSyB24sHpEcyfWbTtKA42MLYyCEDHm2toORQ";
+      const apiKey = process.env.GEMINI_API_KEY;
       if (!apiKey) {
         return res.status(500).json({ error: "Gemini API key is missing" });
       }
