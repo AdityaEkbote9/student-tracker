@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useStore } from '@/store';
+import { useStore, useProductivityScore } from '@/store';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Play, Pause, RotateCcw, Timer, Flame, Award, Target } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 
 export default function Focus() {
-  const { addFocusTime, productivityScore } = useStore();
+  const { addFocusTime } = useStore();
+  const productivityScore = useProductivityScore();
   const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [isRunning, setIsRunning] = useState(false);
   const [mode, setMode] = useState<'pomodoro' | 'shortBreak' | 'longBreak'>('pomodoro');

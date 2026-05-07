@@ -14,11 +14,8 @@ async function startServer() {
       const { syllabus, examDate, availableHours, subjectDifficulty } = req.body;
       
       const apiKey = process.env.GEMINI_API_KEY;
-      if (!apiKey) {
-        return res.status(500).json({ error: "Gemini API key is missing" });
-      }
 
-      const ai = new GoogleGenAI({ apiKey });
+      const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
       
       const prompt = `Act as an expert study planner. Create a personalized study roadmap for a student.
 Input Details:
@@ -38,6 +35,7 @@ The output MUST exactly follow this JSON schema:
 
       let plan;
       try {
+        if (!ai) throw new Error("No API key, using fallback");
         const response = await ai.models.generateContent({
           model: "gemini-2.0-flash",
           contents: prompt,

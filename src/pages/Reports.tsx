@@ -1,4 +1,4 @@
-import { useStore } from '@/store';
+import { useStore, useProductivityScore } from '@/store';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Download, FileText, BarChart2, CheckCircle2 } from 'lucide-react';
@@ -99,7 +99,8 @@ function downloadPDF(title: string, content: string) {
 }
 
 export default function Reports() {
-  const { focusTimeTotal, tasks, streak, productivityScore, goals, mentorTasks, user } = useStore();
+  const { focusTimeTotal, tasks, streak, goals, mentorTasks, user } = useStore();
+  const productivityScore = useProductivityScore();
   const [generating, setGenerating] = useState(false);
 
   const completedTasks = tasks.filter(t => t.status === 'done').length;

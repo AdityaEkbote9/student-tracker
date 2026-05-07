@@ -292,7 +292,6 @@ interface AppState {
   events: TimetableEvent[];
   mentorTasks: MentorTask[];
   doubts: Doubt[];
-  productivityScore: number;
   streak: number;
   focusTimeTotal: number; // in minutes
   xp: number;
@@ -335,7 +334,6 @@ export const useStore = create<AppState>()(
       ],
       mentorTasks: seedMentorTasks,
       doubts: seedDoubts,
-      productivityScore: 82,
       streak: 7,
       focusTimeTotal: 260,
       xp: 1450,
@@ -391,3 +389,36 @@ export const useStore = create<AppState>()(
     }
   )
 );
+
+/**
+ * Live Productivity Score (0–100)
+ * Formula:
+ *   35% Task Completion + 25% Focus Time + 20% Streak + 20% Goal Progress
+ */
+export function useProductivityScore(): number {
+  return useStore((state) => {
+    const { tasks, focusTimeTotal, streak, goals } = state;
+
+    // Task completion %
+    const totalTasks = tasks.length;
+    const completedTasks = tasks.filter(t => t.status === 'done').length;
+    const taskPct = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+
+    // Focus time % (target: 600 min/week = 10h)
+    const focusPct = Math.min(100, (focusTimeTotal / 600) * 100);
+
+    // Streak % (7-day streak = 100%)
+    const streakPct = Math.min(100, (streak / 7) * 100);
+
+    // Goal progress % (average across all goals)
+    const goalPct = goals.length > 0
+      ? goals.reduce((sum, g) => sum + Math.min(100, (g.progress / g.target) * 100), 0) / goals.length
+      : 0;
+
+    const score = Math.round(
+      (0.35 * taskPct) + (0.25 * focusPct) + (0.20 * streakPct) + (0.20 * goalPct)
+    );
+
+    return Math.min(100, Math.max(0, score));
+  });
+}

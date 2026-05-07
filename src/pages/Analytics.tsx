@@ -1,4 +1,4 @@
-import { useStore } from '@/store';
+import { useStore, useProductivityScore } from '@/store';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
@@ -24,7 +24,8 @@ const SUBJECT_DATA = [
 ];
 
 export default function Analytics() {
-  const { focusTimeTotal, productivityScore, streak, tasks, goals } = useStore();
+  const { focusTimeTotal, streak, tasks, goals } = useStore();
+  const productivityScore = useProductivityScore();
 
   const completedTasks = tasks.filter(t => t.status === 'done').length;
   const totalTasks = tasks.length;
@@ -132,21 +133,21 @@ export default function Analytics() {
             <CardDescription>Track your progress against weekly targets</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[250px] w-full mt-4">
+            <div className="h-[280px] w-full mt-4">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={[
-                    { name: 'Study target', actual: 40, target: 50 },
-                    { name: 'Tasks completed', actual: 23, target: 30 },
-                    { name: 'Deep work sessions', actual: 8, target: 10 },
-                    { name: 'Reviews done', actual: 4, target: 5 },
+                    { name: 'Study Target', actual: 40, target: 50 },
+                    { name: 'Tasks Done', actual: 23, target: 30 },
+                    { name: 'Deep Work', actual: 8, target: 10 },
+                    { name: 'Reviews', actual: 4, target: 5 },
                   ]}
                   layout="vertical"
-                  margin={{ top: 5, right: 30, left: 40, bottom: 5 }}
+                  margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} className="stroke-muted/30" />
                   <XAxis type="number" className="text-xs" tick={{fill: 'hsl(var(--muted-foreground))'}} />
-                  <YAxis dataKey="name" type="category" className="text-xs" width={100} tick={{fill: 'hsl(var(--muted-foreground))'}} />
+                  <YAxis dataKey="name" type="category" className="text-xs" width={100} tick={{fill: '#94A3B8', fontSize: 12, fontWeight: 500}} />
                   <Tooltip 
                     contentStyle={{ backgroundColor: 'rgba(15,15,24,0.95)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '12px', backdropFilter: 'blur(16px)', boxShadow: '0 10px 25px -3px rgb(0 0 0 / 0.3)' }}
                     itemStyle={{ color: '#f0f0f5' }}

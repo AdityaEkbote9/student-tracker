@@ -1,4 +1,4 @@
-import { useStore } from '@/store';
+import { useStore, useProductivityScore } from '@/store';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Flame, Timer, Target, CheckSquare, BrainCircuit, Activity } from 'lucide-react';
@@ -15,7 +15,8 @@ const studyData = [
 ];
 
 export default function Dashboard() {
-  const { productivityScore, streak, focusTimeTotal, tasks, goals } = useStore();
+  const { streak, focusTimeTotal, tasks, goals } = useStore();
+  const productivityScore = useProductivityScore();
   
   const completedTasks = tasks.filter(t => t.status === 'done').length;
   const pendingTasks = tasks.filter(t => t.status !== 'done').length;
