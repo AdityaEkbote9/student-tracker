@@ -84,7 +84,7 @@ export default function MentorStudents() {
                 const st = statusConfig[task.status];
 
                 return (
-                  <tr key={task.id} className="border-b border-border last:border-0 hover:bg-secondary/30 transition-colors">
+                  <tr key={task.id} className="border-b border-border last:border-0 hover:bg-secondary/50 transition-all duration-200">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white text-sm font-bold">{studentName.charAt(0)}</div>
@@ -139,8 +139,8 @@ export default function MentorStudents() {
         const studentName = task.assignedTo.split('@')[0].charAt(0).toUpperCase() + task.assignedTo.split('@')[0].slice(1);
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="fixed inset-0 bg-black/60" onClick={() => setGradingTask(null)} />
-            <Card className="relative z-10 w-full max-w-lg bg-card border-border rounded-2xl shadow-2xl">
+            <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setGradingTask(null)} />
+            <Card className="relative z-10 w-full max-w-lg bg-card/95 backdrop-blur-xl border-border rounded-2xl shadow-2xl shadow-black/30">
               <CardContent className="p-6 space-y-5">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-bold text-foreground">Grade Submission</h3>

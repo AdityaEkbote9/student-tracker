@@ -58,7 +58,7 @@ export default function Focus() {
         <p className="text-muted-foreground">Engage deeply. Do not disturb.</p>
       </div>
 
-      <Card className="border border-border bg-card shadow-2xl overflow-hidden relative rounded-2xl">
+      <Card className={`border border-border bg-card shadow-2xl overflow-hidden relative rounded-2xl transition-all duration-500 ${isRunning ? 'ring-2 ring-indigo-500/30 shadow-indigo-500/10' : ''}`}>
         <div className="absolute -top-12 -right-12 w-64 h-64 bg-indigo-500/10 blur-3xl rounded-full"></div>
         <div className="absolute top-0 left-0 right-0 h-1 bg-secondary">
            <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${progress}%` }} />
@@ -110,7 +110,7 @@ export default function Focus() {
       </Card>
 
       <div className="grid sm:grid-cols-3 gap-4">
-        <div className="bg-card rounded-2xl p-6 border border-border flex items-center gap-4">
+        <div className="bg-card rounded-2xl p-6 border border-border flex items-center gap-4 hover:-translate-y-0.5 transition-all duration-300">
           <div className="p-3 bg-orange-500/10 rounded-xl border border-orange-500/20 text-orange-400">
             <Flame className="h-6 w-6" />
           </div>
@@ -119,7 +119,7 @@ export default function Focus() {
             <p className="text-xl font-bold text-foreground">2 Pomodoros</p>
           </div>
         </div>
-        <div className="bg-card rounded-2xl p-6 border border-border flex items-center gap-4">
+        <div className="bg-card rounded-2xl p-6 border border-border flex items-center gap-4 hover:-translate-y-0.5 transition-all duration-300">
           <div className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-400">
             <Award className="h-6 w-6" />
           </div>
@@ -128,7 +128,7 @@ export default function Focus() {
             <p className="text-xl font-bold text-foreground">+120 XP</p>
           </div>
         </div>
-        <div className="bg-card rounded-2xl p-6 border border-border flex items-center gap-4">
+        <div className="bg-card rounded-2xl p-6 border border-border flex items-center gap-4 hover:-translate-y-0.5 transition-all duration-300">
           <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20 text-blue-400">
             <Target className="h-6 w-6" />
           </div>

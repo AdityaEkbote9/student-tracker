@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Clock, User, Timer, AlertTriangle, CheckCircle, Send, Star, GraduationCap, BookOpen } from 'lucide-react';
+import { Clock, User, Timer, AlertTriangle, CheckCircle, Send, Star, GraduationCap, BookOpen, HelpCircle } from 'lucide-react';
 import { format, formatDistanceToNow, isPast } from 'date-fns';
 
 const statusConfig = {
@@ -47,12 +47,20 @@ export default function StudentWorkspace() {
           <h2 className="text-3xl font-bold tracking-tight text-foreground">Assigned Tasks</h2>
           <p className="text-muted-foreground">Tasks and assignments from your mentors</p>
         </div>
-        <Link to="/app/workspace/grades">
-          <Button variant="outline" className="gap-2 rounded-xl border-border">
-            <Star className="h-4 w-4" />
-            View Grades
-          </Button>
-        </Link>
+        <div className="flex gap-3">
+          <Link to="/app/workspace/doubts">
+            <Button variant="outline" className="gap-2 rounded-xl border-border">
+              <HelpCircle className="h-4 w-4" />
+              Doubt Support
+            </Button>
+          </Link>
+          <Link to="/app/workspace/grades">
+            <Button variant="outline" className="gap-2 rounded-xl border-border">
+              <Star className="h-4 w-4" />
+              View Grades
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Stats Row */}
@@ -63,7 +71,7 @@ export default function StudentWorkspace() {
           { label: 'Graded', value: gradedTasks.length, icon: CheckCircle, color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20' },
           { label: 'Avg Score', value: avgScore, icon: Star, color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20' },
         ].map((stat) => (
-          <div key={stat.label} className="bg-card rounded-2xl p-5 border border-border flex items-center gap-4">
+          <div key={stat.label} className="bg-card rounded-2xl p-5 border border-border flex items-center gap-4 hover:-translate-y-0.5 transition-all duration-300">
             <div className={`p-3 rounded-xl border ${stat.bg}`}>
               <stat.icon className={`h-5 w-5 ${stat.color}`} />
             </div>

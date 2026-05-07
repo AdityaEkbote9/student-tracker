@@ -34,8 +34,11 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background orbs */}
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-indigo-500/8 rounded-full blur-[120px] animate-glow-pulse" />
+      <div className="absolute bottom-1/4 -right-32 w-80 h-80 bg-purple-500/8 rounded-full blur-[100px] animate-glow-pulse" style={{animationDelay: '1.5s'}} />
+      <div className="w-full max-w-md relative z-10">
         <div className="flex justify-center mb-8">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
@@ -45,7 +48,7 @@ export default function Login() {
           </div>
         </div>
 
-        <Card className="shadow-xl rounded-2xl bg-card border-border">
+        <Card className="shadow-2xl shadow-black/20 rounded-2xl bg-card border-border">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl text-center">
               {isLogin ? 'Welcome back' : 'Create an account'}
@@ -129,7 +132,7 @@ export default function Login() {
               </div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
-              <Button type="submit" className="w-full h-11 text-base bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button type="submit" className="w-full h-11 text-base bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-500/20 hover:shadow-xl hover:shadow-indigo-500/30 transition-all duration-300">
                 {isLogin ? 'Sign In' : 'Sign Up'}
               </Button>
               <div className="text-sm text-center text-muted-foreground">

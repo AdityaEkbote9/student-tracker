@@ -49,7 +49,7 @@ export default function Tasks() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Tasks</h2>
@@ -111,7 +111,7 @@ export default function Tasks() {
             </h3>
             
             {tasks.filter(t => t.status === status).map(task => (
-              <Card key={task.id} className="shadow-sm hover:shadow-md transition-shadow group bg-card border-border">
+              <Card key={task.id} className={`shadow-sm hover:shadow-md transition-all duration-300 group bg-card border-border hover:-translate-y-0.5 border-l-[3px] ${task.priority === 'High' ? 'border-l-red-500' : task.priority === 'Medium' ? 'border-l-orange-500' : 'border-l-blue-500'}`}>
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
                     <button onClick={() => toggleStatus(task)} className="mt-1 flex-shrink-0 text-muted-foreground hover:text-primary transition-colors">

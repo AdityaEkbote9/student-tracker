@@ -52,7 +52,7 @@ export default function MentorDashboard() {
           { label: 'Avg Completion', value: `${avgCompletion}%`, icon: TrendingUp, color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20' },
           { label: 'Pending Reviews', value: pendingReviews, icon: Clock, color: pendingReviews > 0 ? 'text-amber-400' : 'text-muted-foreground', bg: pendingReviews > 0 ? 'bg-amber-500/10 border-amber-500/20' : 'bg-secondary/50 border-border' },
         ].map((s) => (
-          <div key={s.label} className="bg-card rounded-2xl p-5 border border-border flex items-center gap-4">
+          <div key={s.label} className="bg-card rounded-2xl p-5 border border-border flex items-center gap-4 hover:-translate-y-0.5 transition-all duration-300">
             <div className={`p-3 rounded-xl border ${s.bg}`}><s.icon className={`h-5 w-5 ${s.color}`} /></div>
             <div>
               <p className="text-xs text-muted-foreground font-bold uppercase tracking-wider">{s.label}</p>
@@ -79,7 +79,7 @@ export default function MentorDashboard() {
               </thead>
               <tbody>
                 {studentStats.map((s) => (
-                  <tr key={s.email} className="border-b border-border last:border-0 hover:bg-secondary/30 transition-colors">
+                  <tr key={s.email} className="border-b border-border last:border-0 hover:bg-secondary/50 transition-all duration-200">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white text-sm font-bold">{s.name.charAt(0)}</div>
@@ -111,7 +111,7 @@ export default function MentorDashboard() {
             {recentActivity.map((task) => {
               const studentName = task.assignedTo.split('@')[0].charAt(0).toUpperCase() + task.assignedTo.split('@')[0].slice(1);
               return (
-                <div key={task.id} className="bg-card rounded-xl p-4 border border-border flex items-center justify-between gap-4">
+                <div key={task.id} className="bg-card rounded-xl p-4 border border-border flex items-center justify-between gap-4 hover:border-indigo-500/20 transition-all duration-200">
                   <div className="flex items-center gap-3 min-w-0">
                     <div className={`p-2 rounded-lg border ${task.status === 'submitted' ? 'bg-purple-500/10 border-purple-500/20' : 'bg-emerald-500/10 border-emerald-500/20'}`}>
                       {task.status === 'submitted' ? <Send className="h-4 w-4 text-purple-400" /> : <CheckCircle className="h-4 w-4 text-emerald-400" />}

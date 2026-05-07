@@ -72,7 +72,7 @@ export default function MentorAssignTask() {
       </div>
 
       {success && (
-        <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 flex items-center gap-3 text-emerald-400 animate-in fade-in">
+        <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 flex items-center gap-3 text-emerald-400 animate-fade-in-up">
           <CheckCircle className="h-5 w-5" />
           <span className="font-semibold">Task assigned successfully!</span>
         </div>

@@ -1,6 +1,6 @@
 import { Outlet, Navigate, Link, useLocation } from 'react-router';
 import { useStore } from '@/store';
-import { LayoutDashboard, CheckSquare, Calendar, Timer, LineChart, Target, FileText, BrainCircuit, Settings, LogOut, Bell, Menu, Sun, Moon, GraduationCap, Users, ClipboardList, Star } from 'lucide-react';
+import { LayoutDashboard, CheckSquare, Calendar, Timer, LineChart, Target, FileText, BrainCircuit, Settings, LogOut, Bell, Menu, Sun, Moon, GraduationCap, Users, ClipboardList, Star, HelpCircle } from 'lucide-react';
 import { useState } from 'react';
 
 type Notif = { id: string; text: string; time: string; read: boolean };
@@ -32,11 +32,15 @@ const mentorSidebarItems = [
   { name: 'Dashboard', path: '/app/mentor-dashboard', icon: LayoutDashboard },
   { name: 'Assign Tasks', path: '/app/mentor-assign', icon: ClipboardList },
   { name: 'Student Progress', path: '/app/mentor-students', icon: Users },
+  { name: 'Student Doubts', path: '/app/mentor-doubts', icon: HelpCircle },
+  { name: 'Reports', path: '/app/reports', icon: FileText },
+  { name: 'Settings', path: '/app/settings', icon: Settings },
 ];
 
 export default function AppLayout() {
   const user = useStore((state) => state.user);
   const logout = useStore((state) => state.logout);
+  const toggleTheme = useStore((state) => state.toggleTheme);
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -52,7 +56,7 @@ export default function AppLayout() {
   return (
     <div className="min-h-screen bg-background text-foreground flex">
       {/* Sidebar Desktop */}
-      <aside className="hidden md:flex flex-col w-64 border-r border-border fixed h-full z-10 transition-all bg-background">
+      <div className="hidden md:flex w-64 flex-col fixed inset-y-0 z-50 bg-sidebar border-r border-sidebar-border">
         <div className="p-6">
           <Link to={isMentor ? '/app/mentor-dashboard' : '/app'} className="flex items-center gap-3">
             <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
@@ -83,12 +87,11 @@ export default function AppLayout() {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors border border-transparent ${
-                  isActive 
-                    ? 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20 font-semibold' 
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted font-medium'
-                }`}
-              >
+                    className={`flex items-center gap-3 px-3 py-3 rounded-lg border relative transition-all duration-300 ${
+                      isActive ? 'bg-[rgba(99,102,241,0.15)] text-[#06B6D4] font-semibold border-transparent shadow-[0_0_20px_rgba(99,102,241,0.3)]' : 'border-transparent text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 font-medium hover:translate-x-0.5'
+                    }`}
+                  >
+                    {isActive && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-full bg-[#06B6D4] rounded-r-full" />}
                 <item.icon className="h-5 w-5" />
                 {item.name}
               </Link>
@@ -105,12 +108,12 @@ export default function AppLayout() {
             Settings
           </Link>
         </div>
-      </aside>
+      </div>
 
       {/* Main Content Area */}
       <div className="flex-1 md:ml-64 flex flex-col min-h-screen relative">
         {/* Top Navbar */}
-        <header className="h-16 border-b border-border bg-background/50 backdrop-blur-md sticky top-0 z-20 px-4 md:px-8 flex items-center justify-between">
+        <header className="h-16 border-b border-border bg-background/60 backdrop-blur-xl backdrop-saturate-150 sticky top-0 z-20 px-4 md:px-8 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Button 
               variant="ghost" 
@@ -137,7 +140,7 @@ export default function AppLayout() {
               {notifOpen && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setNotifOpen(false)} />
-                  <div className="absolute right-0 top-12 z-50 w-80 bg-card border border-border rounded-xl shadow-2xl overflow-hidden">
+                  <div className="absolute right-0 top-12 z-50 w-80 bg-card/95 backdrop-blur-xl border border-border rounded-2xl shadow-2xl shadow-black/20 overflow-hidden">
                     <div className="flex items-center justify-between px-4 py-3 border-b border-border">
                       <h3 className="font-semibold text-sm">Notifications</h3>
                       <button onClick={() => { setNotifications(prev => prev.map(n => ({...n, read: true}))); }} className="text-xs text-muted-foreground hover:text-foreground">Mark all read</button>
@@ -158,7 +161,7 @@ export default function AppLayout() {
               )}
             </div>
 
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground" onClick={useStore((state) => state.toggleTheme)}>
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground" onClick={toggleTheme}>
                <Sun className="h-5 w-5 hidden dark:block" />
                <Moon className="h-5 w-5 block dark:hidden" />
             </Button>
@@ -168,15 +171,15 @@ export default function AppLayout() {
             <DropdownMenu>
               <DropdownMenuTrigger className="relative h-9 w-9 rounded-full outline-hidden cursor-pointer">
                 <Avatar className="h-9 w-9 border border-border">
-                  <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`} alt={user.name} />
-                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                  <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name}`} alt={user?.name} />
+                  <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end">
                 <div className="flex flex-col space-y-1 p-2">
-                  <p className="text-sm font-medium leading-none">{user.name}</p>
-                  <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
-                  <p className="text-xs leading-none text-muted-foreground/60 capitalize mt-1">{user.role} Account</p>
+                  <p className="text-sm font-medium leading-none">{user?.name}</p>
+                  <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+                  <p className="text-xs leading-none text-muted-foreground/60 capitalize mt-1">{user?.role} Account</p>
                 </div>
                 <DropdownMenuItem className="cursor-pointer">
                   <Link to="/app/settings">Profile Settings</Link>
@@ -192,7 +195,9 @@ export default function AppLayout() {
 
         {/* Page Content */}
         <main className="flex-1 p-4 md:p-8">
-          <Outlet />
+          <div className="animate-fade-in-up">
+            <Outlet />
+          </div>
         </main>
       </div>
 
@@ -200,7 +205,7 @@ export default function AppLayout() {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 md:hidden flex">
           <div className="fixed inset-0 bg-black/50" onClick={() => setMobileMenuOpen(false)}></div>
-          <div className="relative flex-1 flex flex-col max-w-xs w-full bg-background">
+          <div className="relative flex-1 flex flex-col max-w-xs w-full bg-sidebar">
              <div className="p-6 border-b border-border flex justify-between items-center">
                 <Link to={isMentor ? '/app/mentor-dashboard' : '/app'} className="flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
                   <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
@@ -232,10 +237,11 @@ export default function AppLayout() {
                     key={item.name}
                     to={item.path}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-3 rounded-lg border border-transparent ${
-                      isActive ? 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20 font-semibold' : 'text-muted-foreground hover:text-foreground hover:bg-muted font-medium'
+                    className={`flex items-center gap-3 px-3 py-3 rounded-lg border relative transition-all duration-300 ${
+                      isActive ? 'bg-[rgba(99,102,241,0.15)] text-[#06B6D4] font-semibold border-transparent shadow-[0_0_20px_rgba(99,102,241,0.3)]' : 'border-transparent text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 font-medium hover:translate-x-0.5'
                     }`}
                   >
+                    {isActive && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-full bg-[#06B6D4] rounded-r-full" />}
                     <item.icon className="h-5 w-5" />
                     {item.name}
                   </Link>

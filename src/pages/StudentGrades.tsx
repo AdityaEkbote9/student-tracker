@@ -35,7 +35,7 @@ export default function StudentGrades() {
           { label: 'Average', value: `${avgPercent}%`, icon: TrendingUp, color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20' },
           { label: 'Focus Time', value: `${totalFocusTime}m`, icon: Clock, color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20' },
         ].map((s) => (
-          <div key={s.label} className="bg-card rounded-2xl p-5 border border-border flex items-center gap-4">
+          <div key={s.label} className="bg-card rounded-2xl p-5 border border-border flex items-center gap-4 hover:-translate-y-0.5 transition-all duration-300">
             <div className={`p-3 rounded-xl border ${s.bg}`}><s.icon className={`h-5 w-5 ${s.color}`} /></div>
             <div>
               <p className="text-xs text-muted-foreground font-bold uppercase tracking-wider">{s.label}</p>

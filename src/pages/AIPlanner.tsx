@@ -43,7 +43,7 @@ export default function AIPlanner() {
   };
 
   return (
-    <div className="space-y-6 max-w-6xl mx-auto">
+    <div className="space-y-8 max-w-6xl mx-auto">
       <div>
         <h2 className="text-3xl font-bold tracking-tight">AI Study Planner</h2>
         <p className="text-muted-foreground">Generate a personalized roadmap tailored to your exams.</p>
@@ -109,7 +109,7 @@ export default function AIPlanner() {
               </div>
 
               <Button 
-                className="w-full h-12 text-base rounded-xl shadow-lg bg-primary text-primary-foreground hover:bg-primary/90 shadow-indigo-500/20" 
+                className="w-full h-12 text-base rounded-xl shadow-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-indigo-500/20 hover:shadow-xl hover:shadow-indigo-500/30 transition-all duration-300" 
                 onClick={generatePlan}
                 disabled={loading || !syllabus || !examDate}
               >

@@ -31,7 +31,7 @@ export default function Goals() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex justify-between items-center">
          <div>
           <h2 className="text-3xl font-bold tracking-tight">Goals & Progression</h2>
@@ -77,7 +77,10 @@ export default function Goals() {
         {goals.map(goal => (
           <Card key={goal.id} className="border-border bg-card overflow-hidden group">
             <div className="h-1 bg-secondary">
-               <div className="h-full bg-primary" style={{ width: `${(goal.progress / goal.target) * 100}%`}}></div>
+               <div 
+                 className="h-full rounded-r-full transition-all duration-1000 ease-out" 
+                 style={{ width: `${(goal.progress / goal.target) * 100}%`, background: 'linear-gradient(90deg, #7C3AED, #06B6D4)' }}
+               />
             </div>
             <CardContent className="p-6">
               <div className="flex items-center gap-3 mb-4">
@@ -100,7 +103,15 @@ export default function Goals() {
                   <span className="font-medium text-foreground">{goal.progress} / {goal.target}</span>
                   <span className="text-muted-foreground font-mono">{Math.round((goal.progress / goal.target) * 100)}%</span>
                 </div>
-                <Progress value={(goal.progress / goal.target) * 100} className="h-2" />
+                <div className="h-2 w-full bg-secondary/30 rounded-full overflow-hidden relative">
+                  <div 
+                    className="absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out animate-glow-pulse"
+                    style={{ width: `${(goal.progress / goal.target) * 100}%`, background: 'linear-gradient(90deg, #7C3AED, #06B6D4)' }}
+                  >
+                    {/* Glowing endpoint */}
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-4 bg-white/50 blur-[2px] rounded-full" />
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>

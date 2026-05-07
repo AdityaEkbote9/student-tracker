@@ -10,7 +10,7 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-background font-sans text-foreground flex flex-col">
-      <header className="px-6 lg:px-12 h-20 flex items-center justify-between border-b border-border bg-background/50 backdrop-blur-md sticky top-0 z-50">
+      <header className="px-6 lg:px-12 h-20 flex items-center justify-between border-b border-border bg-background/60 backdrop-blur-xl backdrop-saturate-150 sticky top-0 z-50">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
             <BrainCircuit className="h-6 w-6 text-white" />
@@ -36,7 +36,10 @@ export default function Landing() {
 
       <main className="flex-1">
         {/* Hero Section - Split Layout from Design Recipe */}
-        <section className="pt-24 pb-32 px-6 lg:px-12 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center max-w-7xl mx-auto">
+        <section className="pt-24 pb-32 px-6 lg:px-12 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center max-w-7xl mx-auto relative">
+          {/* Animated background orbs */}
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-[120px] animate-glow-pulse" />
+          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-[100px] animate-glow-pulse" style={{animationDelay: '1.5s'}} />
           <div className="space-y-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-sm font-medium">
               <span className="flex h-2 w-2 rounded-full bg-indigo-600"></span>
@@ -49,7 +52,7 @@ export default function Landing() {
               The ultimate Student Operating System. Reduce procrastination, organize study schedules, build unbreakable habits, and gain visibility into your productivity.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link to="/login" className={cn(buttonVariants({ variant: "default", size: "lg" }), "rounded-full h-14 px-8 text-base shadow-xl shadow-indigo-600/20")}>
+              <Link to="/login" className={cn(buttonVariants({ variant: "default", size: "lg" }), "rounded-full h-14 px-8 text-base shadow-xl shadow-indigo-500/30 hover:shadow-2xl hover:shadow-indigo-500/40 transition-all duration-300")}>
                 Start Ascending <ArrowRight className="ml-2 h-5 w-5"/>
               </Link>
               <Link to="/login" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "rounded-full h-14 px-8 text-base shadow-none")}>
@@ -91,7 +94,7 @@ export default function Landing() {
                 { icon: CheckSquare, title: 'Task & Goal Tracking', desc: 'Break down assignments into subtasks, set academic goals, and visualize your progress over time.' },
                 { icon: Timer, title: 'Pomodoro Engine', desc: 'Built-in focus timers with strict deep work modes and gamified XP rewards to keep you motivated.' },
               ].map((f, i) => (
-                <div key={i} className="p-8 rounded-3xl bg-secondary/50 border border-border hover:border-indigo-500/50 transition-colors group">
+                <div key={i} className="p-8 rounded-3xl bg-secondary/50 border border-border hover:border-indigo-500/50 transition-all duration-300 group hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/5">
                   <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <f.icon className="h-6 w-6" />
                   </div>

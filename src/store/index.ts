@@ -61,6 +61,21 @@ export interface MentorTask {
   focusMinutesSpent: number;
 }
 
+export interface Doubt {
+  id: string;
+  studentEmail: string;
+  studentName: string;
+  mentorName: string;
+  subject: string;
+  relatedTaskId?: string;
+  title: string;
+  description: string;
+  status: 'pending' | 'answered';
+  response?: string;
+  createdAt: string;
+  answeredAt?: string;
+}
+
 // Rich seed data for demo
 const seedMentorTasks: MentorTask[] = [
   {
@@ -229,6 +244,46 @@ const seedMentorTasks: MentorTask[] = [
   },
 ];
 
+const seedDoubts: Doubt[] = [
+  {
+    id: 'dbt-1',
+    studentEmail: 'student@ascendos.com',
+    studentName: 'Rahul',
+    mentorName: 'Prof. Sharma',
+    subject: 'Database Systems',
+    relatedTaskId: 'mt-2',
+    title: 'Normalization confusion — 2NF vs 3NF',
+    description: "I'm confused between 2NF and 3NF. In the example given in class, the table had partial dependency removed in 2NF, but I'm not sure when transitive dependency applies for 3NF. Can you give a concrete example?",
+    status: 'answered',
+    response: '2NF removes partial dependency — when a non-key attribute depends on only part of a composite primary key. 3NF removes transitive dependency — when a non-key attribute depends on another non-key attribute. Example: Student(Roll, Name, Dept, DeptHOD) — DeptHOD depends on Dept, not on Roll directly. That\'s transitive. Split into Student(Roll, Name, Dept) and Dept(Dept, DeptHOD).',
+    createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
+    answeredAt: new Date(Date.now() - 86400000 * 1).toISOString(),
+  },
+  {
+    id: 'dbt-2',
+    studentEmail: 'student@ascendos.com',
+    studentName: 'Rahul',
+    mentorName: 'Prof. Sharma',
+    subject: 'Data Structures',
+    relatedTaskId: 'mt-1',
+    title: 'BFS vs DFS — When to use which?',
+    description: 'For the Graph Traversal assignment, when should I prefer BFS over DFS? Are there cases where one is strictly better than the other for finding shortest paths?',
+    status: 'pending',
+    createdAt: new Date(Date.now() - 3600000 * 3).toISOString(),
+  },
+  {
+    id: 'dbt-3',
+    studentEmail: 'priya@ascendos.com',
+    studentName: 'Priya',
+    mentorName: 'Prof. Sharma',
+    subject: 'Mathematics',
+    title: 'Eigenvalue proof approach',
+    description: 'For Q11 in Problem Set 7, should I use the characteristic polynomial approach or the direct definition to prove the eigenvalue property? The question is ambiguous.',
+    status: 'pending',
+    createdAt: new Date(Date.now() - 7200000).toISOString(),
+  },
+];
+
 interface AppState {
   user: { name: string; email: string; role: UserRole } | null;
   theme: 'light' | 'dark';
@@ -236,6 +291,7 @@ interface AppState {
   goals: Goal[];
   events: TimetableEvent[];
   mentorTasks: MentorTask[];
+  doubts: Doubt[];
   productivityScore: number;
   streak: number;
   focusTimeTotal: number; // in minutes
@@ -256,6 +312,8 @@ interface AppState {
   addMentorTask: (task: MentorTask) => void;
   updateMentorTask: (id: string, updates: Partial<MentorTask>) => void;
   deleteMentorTask: (id: string) => void;
+  addDoubt: (doubt: Doubt) => void;
+  answerDoubt: (id: string, response: string) => void;
 }
 
 export const useStore = create<AppState>()(
@@ -276,6 +334,7 @@ export const useStore = create<AppState>()(
         { id: '1', title: 'Calculus Lecture', start: new Date(new Date().setHours(10, 0, 0, 0)).toISOString(), end: new Date(new Date().setHours(11, 30, 0, 0)).toISOString(), backgroundColor: '#6366f1' },
       ],
       mentorTasks: seedMentorTasks,
+      doubts: seedDoubts,
       productivityScore: 82,
       streak: 7,
       focusTimeTotal: 260,
@@ -320,6 +379,11 @@ export const useStore = create<AppState>()(
       })),
       deleteMentorTask: (id) => set((state) => ({
         mentorTasks: state.mentorTasks.filter((t) => t.id !== id)
+      })),
+
+      addDoubt: (doubt) => set((state) => ({ doubts: [...state.doubts, doubt] })),
+      answerDoubt: (id, response) => set((state) => ({
+        doubts: state.doubts.map((d) => d.id === id ? { ...d, status: 'answered' as const, response, answeredAt: new Date().toISOString() } : d)
       })),
     }),
     {

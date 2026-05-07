@@ -26,6 +26,8 @@ import StudentGrades from './pages/StudentGrades';
 import MentorDashboard from './pages/MentorDashboard';
 import MentorAssignTask from './pages/MentorAssignTask';
 import MentorStudents from './pages/MentorStudents';
+import StudentDoubts from './pages/StudentDoubts';
+import MentorDoubts from './pages/MentorDoubts';
 
 export default function App() {
   const theme = useStore((state) => state.theme);
@@ -57,12 +59,14 @@ export default function App() {
           {/* Student Workspace */}
           <Route path="workspace" element={<StudentWorkspace />} />
           <Route path="workspace/grades" element={<StudentGrades />} />
+          <Route path="workspace/doubts" element={<StudentDoubts />} />
           <Route path="workspace/:taskId" element={<StudentTaskDetail />} />
 
           {/* Mentor Pages */}
           <Route path="mentor-dashboard" element={<MentorDashboard />} />
           <Route path="mentor-assign" element={<MentorAssignTask />} />
           <Route path="mentor-students" element={<MentorStudents />} />
+          <Route path="mentor-doubts" element={<MentorDoubts />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -31,7 +31,7 @@ export default function Analytics() {
   const taskCompletionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in-up">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Analytics</h1>
         <p className="text-muted-foreground">Detailed insights into your productivity and learning patterns.</p>
@@ -114,8 +114,8 @@ export default function Analytics() {
                     ))}
                   </Pie>
                   <Tooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
-                    itemStyle={{ color: 'hsl(var(--foreground))' }}
+                    contentStyle={{ backgroundColor: 'rgba(15,15,24,0.95)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '12px', backdropFilter: 'blur(16px)', boxShadow: '0 10px 25px -3px rgb(0 0 0 / 0.3)' }}
+                    itemStyle={{ color: '#f0f0f5' }}
                   />
                   <Legend layout="horizontal" verticalAlign="bottom" align="center" />
                 </PieChart>
@@ -148,8 +148,8 @@ export default function Analytics() {
                   <XAxis type="number" className="text-xs" tick={{fill: 'hsl(var(--muted-foreground))'}} />
                   <YAxis dataKey="name" type="category" className="text-xs" width={100} tick={{fill: 'hsl(var(--muted-foreground))'}} />
                   <Tooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
-                    itemStyle={{ color: 'hsl(var(--foreground))' }}
+                    contentStyle={{ backgroundColor: 'rgba(15,15,24,0.95)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '12px', backdropFilter: 'blur(16px)', boxShadow: '0 10px 25px -3px rgb(0 0 0 / 0.3)' }}
+                    itemStyle={{ color: '#f0f0f5' }}
                   />
                   <Legend />
                   <Bar dataKey="actual" fill="#10b981" name="Actual Progress" radius={[0, 4, 4, 0]} />

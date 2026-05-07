@@ -84,37 +84,37 @@
 }
 
 .dark {
-    --background: #09090b;
-    --foreground: #fafafa;
-    --card: #16161a;
-    --card-foreground: #fafafa;
-    --popover: #16161a;
-    --popover-foreground: #fafafa;
-    --primary: #4f46e5;
+    --background: #070B14;
+    --foreground: #F8FAFC;
+    --card: rgba(15, 23, 42, 0.8);
+    --card-foreground: #F8FAFC;
+    --popover: #0F172A;
+    --popover-foreground: #F8FAFC;
+    --primary: #6366F1;
     --primary-foreground: #fafafa;
-    --secondary: rgba(255, 255, 255, 0.05);
-    --secondary-foreground: #fafafa;
-    --muted: rgba(255, 255, 255, 0.05);
-    --muted-foreground: rgba(255, 255, 255, 0.4);
-    --accent: rgba(255, 255, 255, 0.05);
-    --accent-foreground: #fafafa;
-    --destructive: #ef4444;
+    --secondary: rgba(255, 255, 255, 0.04);
+    --secondary-foreground: #94A3B8;
+    --muted: rgba(255, 255, 255, 0.04);
+    --muted-foreground: #94A3B8;
+    --accent: rgba(255, 255, 255, 0.06);
+    --accent-foreground: #F8FAFC;
+    --destructive: #FF4D6D;
     --border: rgba(255, 255, 255, 0.05);
-    --input: rgba(255, 255, 255, 0.1);
-    --ring: rgba(255, 255, 255, 0.2);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: #09090b;
-    --sidebar-foreground: #fafafa;
-    --sidebar-primary: #4f46e5;
+    --input: rgba(255, 255, 255, 0.08);
+    --ring: rgba(99, 102, 241, 0.3);
+    --chart-1: #6366F1;
+    --chart-2: #10F0A0;
+    --chart-3: #FF8A00;
+    --chart-4: #06B6D4;
+    --chart-5: #FF3D81;
+    --sidebar: #0F172A;
+    --sidebar-foreground: #F8FAFC;
+    --sidebar-primary: #6366F1;
     --sidebar-primary-foreground: #fafafa;
-    --sidebar-accent: rgba(255, 255, 255, 0.05);
-    --sidebar-accent-foreground: #fafafa;
+    --sidebar-accent: rgba(99, 102, 241, 0.15);
+    --sidebar-accent-foreground: #F8FAFC;
     --sidebar-border: rgba(255, 255, 255, 0.05);
-    --sidebar-ring: rgba(255, 255, 255, 0.2);
+    --sidebar-ring: rgba(99, 102, 241, 0.3);
 }
 
 @layer base {
@@ -123,8 +123,120 @@
     }
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
     }
+  ::selection {
+    background: rgba(99, 102, 241, 0.25);
+    color: inherit;
+  }
+}
+
+/* Custom scrollbar */
+@layer base {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Premium animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out both;
+}
+
+.animate-fade-in-up-delay-1 {
+  animation: fade-in-up 0.5s ease-out 0.1s both;
+}
+
+.animate-fade-in-up-delay-2 {
+  animation: fade-in-up 0.5s ease-out 0.2s both;
+}
+
+.animate-fade-in-up-delay-3 {
+  animation: fade-in-up 0.5s ease-out 0.3s both;
+}
+
+.animate-fade-in-up-delay-4 {
+  animation: fade-in-up 0.5s ease-out 0.4s both;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Glass morphism utility */
+.glass {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+/* Premium gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #06B6D4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient Intelligence Utilities */
+.bg-gradient-dashboard {
+  background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #06B6D4 100%);
+}
+
+.bg-gradient-focus {
+  background: linear-gradient(135deg, #00F5A0 0%, #00D9F5 100%);
+}
+
+.bg-gradient-xp {
+  background: linear-gradient(135deg, #FF8A00 0%, #FF3D81 100%);
+}
+
+.ambient-glow {
+  background: radial-gradient(circle, rgba(59,130,246,0.18), transparent 70%);
 }
