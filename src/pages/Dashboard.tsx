@@ -42,7 +42,7 @@ export default function Dashboard() {
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Productivity Score</p>
                 <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-dashboard">{productivityScore}</span>
+                  <span className="text-4xl font-bold gradient-text">{productivityScore}</span>
                   <span className="text-sm font-medium text-emerald-400">+4%</span>
                 </div>
               </div>

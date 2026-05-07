@@ -64,8 +64,19 @@ const MOCK_EVENTS: TimetableEvent[] = [
 export default function Timetable() {
   const { events, addEvent, updateEvent, deleteEvent } = useStore();
   const [open, setOpen] = useState(false);
+  // Default to 10:00 AM - 11:00 AM today (always visible in calendar 07:00-20:00 range)
+  const getDefaultStart = () => {
+    const d = new Date();
+    d.setHours(10, 0, 0, 0);
+    return d.toISOString().slice(0, 16);
+  };
+  const getDefaultEnd = () => {
+    const d = new Date();
+    d.setHours(11, 0, 0, 0);
+    return d.toISOString().slice(0, 16);
+  };
   const [newEvent, setNewEvent] = useState<Partial<TimetableEvent>>({
-    title: '', start: new Date().toISOString().slice(0, 16), end: new Date(Date.now() + 3600000).toISOString().slice(0, 16), backgroundColor: '#6366f1'
+    title: '', start: getDefaultStart(), end: getDefaultEnd(), backgroundColor: '#6366f1'
   });
 
   const MODULE_COLORS = ['#3b82f6', '#8b5cf6', '#9ca3af', '#22c55e', '#f59e0b', '#ef4444', '#ec4899', '#06b6d4'];
@@ -108,7 +119,7 @@ export default function Timetable() {
         backgroundColor: newEvent.backgroundColor || '#6366f1'
       });
       setOpen(false);
-      setNewEvent({ title: '', start: new Date().toISOString().slice(0, 16), end: new Date(Date.now() + 3600000).toISOString().slice(0, 16), backgroundColor: '#6366f1' });
+      setNewEvent({ title: '', start: getDefaultStart(), end: getDefaultEnd(), backgroundColor: '#6366f1' });
     }
   };
 
@@ -167,9 +178,9 @@ export default function Timetable() {
         
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="rounded-full shadow-lg shadow-indigo-500/20 gap-2">
+            <div className={cn(buttonVariants(), "rounded-full shadow-lg shadow-indigo-500/20 gap-2 cursor-pointer")}>
               <Plus className="h-4 w-4" /> Add Event
-            </Button>
+            </div>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -194,12 +205,12 @@ export default function Timetable() {
                 <Label>Color</Label>
                 <div className="flex gap-2">
                   {['#6366f1','#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6'].map(c => (
-                    <button key={c} onClick={() => setNewEvent({...newEvent, backgroundColor: c})} className={`w-8 h-8 rounded-full border-2 transition-all ${newEvent.backgroundColor === c ? 'border-white scale-110' : 'border-transparent'}`} style={{backgroundColor: c}} />
+                    <button key={c} type="button" onClick={() => setNewEvent({...newEvent, backgroundColor: c})} className={`w-8 h-8 rounded-full border-2 transition-all ${newEvent.backgroundColor === c ? 'border-white scale-110' : 'border-transparent'}`} style={{backgroundColor: c}} />
                   ))}
                 </div>
               </div>
             </div>
-            <Button onClick={handleCreate} className="w-full">Create Event</Button>
+            <Button type="button" onClick={handleCreate} className="w-full">Create Event</Button>
           </DialogContent>
         </Dialog>
       </div>
@@ -272,6 +283,7 @@ export default function Timetable() {
           <div className="min-h-[700px] fc-custom-wrapper">
             {/* @ts-ignore - Types mismatch with React 19 */}
             <FullCalendar
+              key={events.length}
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
               initialView="timeGridWeek"
               headerToolbar={false} // Hidden to match image style heavily
